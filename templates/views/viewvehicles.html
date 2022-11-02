@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/bc4d7d5bce.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css') }}">
+</head>
+<body>
+
+    <!-- start body -->
+
+    <div class="container-fluid">
+
+        <section class="row">
+
+<!--            sidebar-->
+            {% include 'sidebar.html' %}
+<!--    endsidebar-->
+
+<!--            top bar-->
+
+            <div class="col-md-9">
+
+                {% include 'topbar.html' %}
+
+                {{message}}
+
+
+                <section class="row">
+                    <div class="col-md-11 p-2 ms-3">
+                        <h4>vehicles</h4>
+                        <a href="/addvehicle/{{owner_id}}"><i class="fa-solid fa-plus"></i>add vehicle</a><br>
+                            <span style="color: red;">{{message}}</span>
+                            <table class="table">
+                                <tr>
+                                    <th>Reg no.</th>
+                                    <th>Type</th>
+                                    <th>Make</th>
+                                    <th>Model</th>
+                                    <th>Capacity</th>
+                                    <th>Pass</th>
+                                    <th>Year</th>
+                                    <th>Photo</th>
+                                    <th>Status</th>
+                                </tr>
+
+                                <!-- dictionary cursor easier -->
+
+                                {% for vehicle in vehicles %}
+                                <tr>
+                                    <td>{{vehicle[0]}}</td>
+                                    <td>
+                                        {% for type in types %}
+
+                                            {% if vehicle[1] == type[0] %}
+                                                {{type[1]}}
+                                            {% endif %}
+
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% for make in makes %}
+
+                                            {% if vehicle[2] == make[0] %}
+                                                {{make[1]}}
+                                            {% endif %}
+
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% for model in models %}
+
+                                            {% if vehicle[3] == model[0] %}
+                                                {{model[2]}}
+                                            {% endif %}
+
+                                    {% endfor %}
+                                    </td>
+                                    <td>{{vehicle[4]}}</td>
+                                    <td>{{vehicle[7]}}</td>
+                                    <td>{{vehicle[9]}}</td>
+                                    <td>
+                                        <img src="../static/images/{{vehicle[8]}}" width="20%">
+                                    </td>
+                                    {% if vehicle[14] == 'Not allocated' %}
+                                    <td>
+                                        
+                                        <a href="/allocatedriver/{{vehicle[0]}}" onclick="return confirm('Are you sure');">Assign vehicle</a>
+                                        
+                                        <!-- <a href=""><i class="fa-solid fa-car"></i></a>
+                                        <a href=""><i class="fa-solid fa-plus"></i></a>
+                                        <a href=""><i class="fa-solid fa-trash"></i></a> -->
+                                    </td>
+                                    {% elif vehicle[14] == 'Allocated' %}
+                                    <td>
+                                        <span class="badge bg-success">Allocated</span>
+                                        <br>
+                                        <a href="/send_service/{{vehicle[0]}}">Send service</a>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+
+                            </table>
+                        <br>
+                        <!-- to show ajax responses -->
+                        <span style="color: red;" id="errorAlert"></span>
+                        <span style="color: blue;" id="successAlert"></span>
+                    </div>
+
+
+                </section>
+
+            </div>
+
+
+
+<!--            endtopbar-->
+
+
+        </section>
+
+    </div>
+
+
+    <!-- end body -->
+
+    <!--  -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="{{url_for('static', filename = 'script/index.js') }}"></script>
+    <script src="{{url_for('static', filename = 'script/addlocation.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+    <!--  -->
+
+</body>
+</html>
+    
+

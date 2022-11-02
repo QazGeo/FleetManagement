@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/bc4d7d5bce.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'overflow.css') }}">
+</head>
+<body>
+
+        <div class="hscroll">
+            <div class="content">
+                <h3>
+                    {{count}} Records found
+                </h3>
+                <table class="table table-responsive">
+                    <tr>
+                        <th>First name</th>
+                        <th>Surname</th>
+                        <th>Last name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Driver license no.</th>
+                        <th>Driver license expiry</th>
+                        <th>Location</th>
+                        <th>DOB</th>
+                        <th>Passport</th>
+                    </tr>
+                    {% for driver in drivers %}
+        
+                        <tr>
+                            <td>{{driver.fname}}</td>
+                            <td>{{driver.surname}}</td>
+                            <td>{{driver.lname}}</td>                        
+                            <td>{{driver.phone | data_decrypt}}</td>
+                            <td>{{driver.email}}</td>
+                            <td>{{driver.dl_no}}</td>
+                            <td>{{driver.dl_no_expiry}}</td>
+                            <td>
+
+                                {% for location in locations %}
+                                    {% if location[0] == driver.loc_id %}
+                                        {{location[1]}}
+                                    {% endif %}
+                                {% endfor %}
+    
+                            </td>
+                            <td>{{driver.dob}}</td>
+                            <td><img src="../static/images/{{driver.passport_pic}}" width="100%"></td>
+                            {% if driver.status == 'Not allocated' %}
+                            <td>
+                                
+                                <a href="/vehiclelivesearch/{{driver.driver_id}}">Assign vehicle</a>
+                                
+                                <!-- <a href=""><i class="fa-solid fa-car"></i></a>
+                                <a href=""><i class="fa-solid fa-plus"></i></a>
+                                <a href=""><i class="fa-solid fa-trash"></i></a> -->
+                            </td>
+                            {% elif driver.status == 'Allocated' %}
+                            <td>
+                                <span class="badge bg-success">Allocated</span>
+                                <br>
+                                <a href="/allocatedvehicle/{{driver.driver_id}}">View allocated car</a><br>
+                                <a href="/assign/{{driver.driver_id}}">Assign task</a><br>
+                                <a href="/reallocate/{{driver.driver_id}}" onclick="return confirm('Are you sure?');">Deallocate</a>
+                            </td>
+                            {% endif %}
+                        </tr>
+        
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="{{url_for('static', filename = 'script/index.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+    <!--  -->
+
+</body>
+</html>

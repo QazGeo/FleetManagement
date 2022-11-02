@@ -1,0 +1,40 @@
+<div class="row sticky-top p-3">
+
+    <div id="rightrow">
+        <div class="col-md-8 d-flex justify-content-around">
+            <div class="navbar navbar-light">
+                <button class="navbar-toggler" id="myButton" type="button" data-toggle="onoff">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <form action="">
+                <input type="text" placeholder="Search" class="form-control">
+            </form>
+        </div>
+<!--                    <div class="col-md-1"></div>-->
+        <div class="col-md-4 d-flex justify-content-around">
+            <a href="#" class="notification">
+                <i class="fa fa-bell" style="font-size:18px;"><span class="badge">3</span></i>
+
+                <!-- &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp -->
+              </a>
+            <div class="dropdown">
+                {% if 'user_id' in session %}
+                    {{session['fname']}} : {{session['role']}}
+                {% endif %}
+                {% if session['prof_pic'] %}
+                <img src="../static/images/{{session['prof_pic']}}" width="25%" class="img-fluid">
+                <br><br>
+                {% else %}
+                <img src="../static/images/imgad.png" width="20%" class="rounded-circle">
+                <br><br>
+                {% endif %}
+                <div class="dropdown-content">
+                  <a href="/profile">Profile</a>
+                  <a href="/logout" id="logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

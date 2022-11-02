@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/bc4d7d5bce.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css') }}">
+</head>
+<body>
+
+    <!-- start body -->
+
+    <div class="container-fluid">
+
+        <section class="row">
+
+<!--            sidebar-->
+            {% include 'sidebar.html' %}
+<!--    endsidebar-->
+
+<!--            top bar-->
+
+            <div class="col-md-9">
+
+                {% include 'topbar.html' %}
+
+
+                <section class="row">
+                    <div class="col-md-4 card p-2 shadow ms-3">
+                        <form action="" id="userForm">
+                            <input type="text" id="fname" placeholder="Enter first name" class="form-control">
+                            <span style="color: red;" id="errorfname"></span>
+                            <br>
+                            <input type="text" id="lname" placeholder="Enter last name" class="form-control">
+                            <span style="color: red;" id="errorlname"></span>
+                            <br>
+                            <input type="text" id="surname" placeholder="Enter surname" class="form-control">
+                            <span style="color: red;" id="errorsurname"></span>
+                            <br>
+                            <label>Select gender</label>
+                            <br>
+                            <input type="radio" name="gender" class="gender" value="Male">Male
+                            <br>
+                            <input type="radio" name="gender" class="gender" value="Female">Female
+                            <br>
+                            <span style="color: red;" id="errorgender"></span>
+                            <br>
+                            <label>Select role</label>
+                            <select id="role">
+                                <option value="admin">Admin</option>
+                                <option value="finance">Finance</option>
+                                <option value="operations">Operations</option>
+                                <option value="guest">Guest</option>
+                            </select>
+                            <br>
+                            <span style="color: red;" id="errorrole"></span>
+                            <br>
+                            <input type="text" id="phone" placeholder="Enter phone no. i.e +254XXXXXXXX" class="form-control">
+                            <span style="color: red;" id="errorphone"></span>
+                            <br>
+                            <input type="email" id="email" placeholder="Enter email" class="form-control">
+                            <span style="color: red;" id="erroremail"></span>
+                            <br>
+                            <input type="submit" value="Add user" class="btn btn-info">
+                        </form>
+                        <br>
+                        <!-- to show ajax responses -->
+                        <span style="color: red;" id="errorAlert"></span>
+                        <span style="color: blue;" id="successAlert"></span>
+                    </div>
+
+
+                </section>
+
+            </div>
+
+
+
+<!--            endtopbar-->
+
+
+        </section>
+
+    </div>
+
+
+    <!-- end body -->
+
+    <!--  -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="{{url_for('static', filename = 'script/index.js') }}"></script>
+    <script src="{{url_for('static', filename = 'script/adduser.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+    <!--  -->
+
+</body>
+</html>

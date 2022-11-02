@@ -1,0 +1,6 @@
+def password_verify(input_password, hash):
+    userBytes = input_password.encode("utf-8")
+    result = bcrypt.checkpw(userBytes, hash)
+    print("Status ", result)
+
+password_verify("kisumu1234", "b'$2b$12$e3GEjfMaPz6UeW2BKtsj8u3OVq8ifOqSPZ5W9gmOqAk6AcOFq1Y2C'")

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/bc4d7d5bce.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'overflow.css') }}">
+</head>
+<body>
+
+        <div class="hscroll">
+            <div class="content">
+                <h3>
+                    {{count}} Records found
+                </h3>
+                <table class="table table-responsive">
+                    <tr>
+                        <th>Service ID</th>
+                        <th>Registration no.</th>
+                        <th>Scheduled date</th>
+                        <th>Scheduled time</th>
+                        <th>Services</th>
+                        <th>Registration date</th>
+                        <th>Status</th>
+                    </tr>
+                    {% for service in services %}
+        
+                        <tr>
+                            <td>{{service.service_id}}</td>
+                            <td>{{service.reg_no}}</td>
+                            <td>{{service.scheduled_date}}</td>
+                            <td>{{service.scheduled_time}}</td>
+                            <td>{{service.services}}</td>                        
+                            <td>{{service.reg_date}}</td>
+                            <td>
+                                {% if service.status == "Pending" %}
+                                    <span class="badge bg-warning">Pending</span>
+                                    <br>
+                                    {% if session['role'] == 'mechanics' %}
+                                        <a href="/servicescomplete/{{service.service_id}}">Process</a>
+                                    {% endif %}
+                                {% elif service.status == "Ongoing" %}
+                                    <span class="badge bg-info">Ongoing</span>
+                                {% elif service.status == "Completed" %}
+                                    <span class="badge bg-success">Completed</span>
+                                {% endif %}
+                            </td>
+                            <td>{{service.driver_id}}</td>
+        
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="{{url_for('static', filename = 'script/index.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+    <!--  -->
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OTP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <style>
+        .divider:after,
+        .divider:before {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #eee;
+        }
+        .h-custom {
+        height: calc(100% - 73px);
+        }
+        @media (max-width: 450px) {
+        .h-custom {
+        height: 100%;
+        }
+        }
+    </style>
+</head>
+<body>
+
+<section class="vh-100">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+          class="img-fluid" alt="Sample image">
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+        {% if session['fname'] %}
+          <h2 id="namee">Welcome {{session['fname']}}</h2>
+
+          <b style="color:red;">
+            {{message}}
+          </b>
+
+          <form action="/conotp" method="post">
+            <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+              <p class="lead fw-normal mb-0 me-3" id="potp">For security purposes, please enter your OTP</p>
+            </div>
+            <!-- OTP input -->
+            <div class="form-outline mb-4">
+              <br>
+              <input type="text" id="otp" class="form-control form-control-lg"
+                placeholder="Enter your OTP" name="otp" />
+            </div>
+
+            <p class="lead fw-normal mb-0 me-3" id="mess">
+              Your time is up. Try again.
+              <br>
+              <a href="/login">Please login</a>
+            </p>
+            </p>
+            <p id="countdown"></p>
+
+            <div class="text-center text-lg-start mt-4 pt-2">
+              <button type="submit" class="btn btn-primary btn-lg"
+                style="padding-left: 2.5rem; padding-right: 2.5rem;" id="otpbtnn">Confirm</button>
+            </div>
+          </form>
+        {% else %}
+        <h3>Error encountered, <a href="/login">Please login</a></h3>
+        <br>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div
+    class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
+    <!-- Copyright -->
+    <div class="text-white mb-3 mb-md-0">
+      Copyright © 2020. All rights reserved.
+    </div>
+    <!-- Copyright -->
+  </div>
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+
+  $(document).ready(
+    function() {
+        $("#mess").hide()
+    }
+  )
+
+  ;
+
+  var timeleft = 30
+  var downloadTimer = setInterval(function(){
+    if(timeleft <= 0){
+      clearInterval(downloadTimer)
+      document.getElementById("countdown").innerHTML = "Finished"
+      document.getElementById("otpbtnn").style.visibility = "hidden"
+      document.getElementById("otp").style.visibility = "hidden"
+      document.getElementById("potp").style.visibility = "hidden"
+
+      $(document).ready(
+          function() {
+              $("#mess").show()
+              $("#namee").hide()
+              $("#countdown").hide()
+
+          }
+      )
+    }
+    else {
+      document.getElementById("countdown").innerHTML = timeleft + " seconds remaining."
+    }
+    timeleft -= 1
+  }
+  , 1000)
+</script>
+
+</body>
+</html>

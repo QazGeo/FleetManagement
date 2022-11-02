@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/bc4d7d5bce.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'overflow.css') }}">
+</head>
+<body>
+
+    <div class="hscroll">
+        <div class="content">
+            <h3>
+                {{count}} Records found
+            </h3>
+            <table class="table table-responsive">
+                <tr>
+                    <th>Reg no.</th>
+                    <th>Type</th>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Capacity</th>
+                    <th>Pass</th>
+                    <th>Year</th>
+                    <th>Photo</th>
+                </tr>
+                {% for vehicle in vehicles %}
+    
+                    <tr>
+                        <td>{{vehicle.reg_no}}</td>
+                        <td>
+                            {% for type in types %}
+                                {% if type[0] == vehicle.type_id %}
+                                    {{type[1]}}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for make in makes %}
+                                {% if make[0] == vehicle.make_id %}
+                                    {{make[1]}}
+                                {% endif %}
+                            {% endfor %}
+                        </td>                            
+                        <td>
+                            {% for model in models %}
+                                {% if model[0] == vehicle.model_id %}
+                                    {{model[2]}}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for capacity in capacitys %}
+                                {% if capacity[0] == vehicle.capacity_id %}
+                                    {{capacity[1]}}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{vehicle.no_of_pass}}</td>
+                        <td>{{vehicle.yom}}</td>
+                        <td><img src="../static/images/{{vehicle.vehicle_pic}}" width="20%"></td>
+                        {% if vehicle.status == 'Not allocated' %}
+                        <td>
+                            
+                            <a href="/allocatedriver/{{vehicle.reg_no}}" onclick="return confirm('Are you sure');">Assign vehicle</a>
+                            
+                            <!-- <a href=""><i class="fa-solid fa-car"></i></a>
+                            <a href=""><i class="fa-solid fa-plus"></i></a>
+                            <a href=""><i class="fa-solid fa-trash"></i></a> -->
+                        </td>
+                        {% elif vehicle.status == 'Allocated' %}
+                        <td>
+                            <span class="badge bg-success">Allocated</span>
+                            <br>
+                            <a href="/send_service/{{vehicle.reg_no}}"></a>
+                        </td>
+                        {% endif %}
+                    </tr>
+    
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="{{url_for('static', filename = 'script/index.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+    <!--  -->
+
+</body>
+</html>

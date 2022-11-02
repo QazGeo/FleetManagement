@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/bc4d7d5bce.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'overflow.css') }}">
+</head>
+<body>
+
+    <div class="hscroll">
+        <div class="content">
+            <h3>
+                {{count}} Records found
+            </h3>
+            <table class="table table-responsive">
+                <tr>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Surname</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Location</th>
+                    <th>ID number</th>
+                    <th>DOB</th>
+                    <th>Reg. date</th>
+                    <th>Passport</th>
+                </tr>
+                {% for owner in owners %}
+    
+                    <tr>
+                        <td>{{owner.fname}}</td>
+                        <td>{{owner.lname}}</td>
+                        <td>{{owner.surname}}</td>                            
+                        <td>{{owner.phone | data_decrypt}}</td>
+                        <td>{{owner.email}}</td>
+                        <td>{{owner.address}}</td>
+                        <td>
+
+                            {% for location in locations %}
+                                {% if location[0] == owner.loc_id %}
+                                    {{location[1]}}
+                                {% endif %}
+                            {% endfor %}
+
+                        </td>
+                        <td>{{owner.id_no}}</td>
+                        <td>{{owner.dob}}</td>
+                        <td>{{owner.reg_date}}</td>
+                        <td><img src="../static/images/{{owner.passport_pic}}" width="100%"></td>
+                        <td>
+                            <a href="/viewvehicles/{{owner.owner_id}}"><i class="fa-solid fa-car"></i></a><br>
+                            <a href="/addvehicle/{{owner.owner_id}}"><i class="fa-solid fa-plus"></i></a><br>
+                            <a href=""><i class="fa-solid fa-trash"></i></a>
+                        </td>
+                    </tr>
+    
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="{{url_for('static', filename = 'script/index.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+    <!--  -->
+
+</body>
+</html>
