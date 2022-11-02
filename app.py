@@ -150,8 +150,38 @@ def conotp():
 
 @app.route('/')
 def dashboard():
+    sqldrivers = "select * from drivers"
+    cursord = connection.cursor()
+    cursord.execute(sqldrivers)
+    no_of_drivers = cursord.rowcount
+
+    sqldrivers2 = "select * from drivers where status = %s"
+    cursord2 = connection.cursor()
+    cursord2.execute(sqldrivers2, "Allocated")
+    alloc_drivers = cursord2.rowcount
+
+    sqldrivers3 = "select * from drivers where status = %s"
+    cursord3 = connection.cursor()
+    cursord3.execute(sqldrivers3, "Not allocated")
+    not_alloc = cursord3.rowcount
+
+    # sqldrivers4 = "select * from vehicle_service where status = %s"
+    # cursord4 = connection.cursor()
+    # cursord4.execute(sqldrivers4)
+    # pending_services = cursord4.rowcount
+
+    cursord.close()
+    cursord2.close()
+    cursord3.close()
+    # cursord4.close()
+
+
+
+
+
+
     if check_user():
-        return render_template("dashboard.html")
+        return render_template("dashboard.html", not_alloc = not_alloc, no_of_drivers = no_of_drivers, alloc_drivers = alloc_drivers)
     else:
         return redirect('/login')
 
