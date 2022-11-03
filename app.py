@@ -165,15 +165,15 @@ def dashboard():
     cursord3.execute(sqldrivers3, "Not allocated")
     not_alloc = cursord3.rowcount
 
-    # sqldrivers4 = "select * from vehicle_service where status = %s"
-    # cursord4 = connection.cursor()
-    # cursord4.execute(sqldrivers4)
-    # pending_services = cursord4.rowcount
+    sqldrivers4 = "select * from vehicle_service where status = %s"
+    cursord4 = connection.cursor()
+    cursord4.execute(sqldrivers4 ,"Pending")
+    pending_services = cursord4.rowcount
 
     cursord.close()
     cursord2.close()
     cursord3.close()
-    # cursord4.close()
+    cursord4.close()
 
 
 
@@ -181,7 +181,7 @@ def dashboard():
 
 
     if check_user():
-        return render_template("dashboard.html", not_alloc = not_alloc, no_of_drivers = no_of_drivers, alloc_drivers = alloc_drivers)
+        return render_template("dashboard.html", not_alloc = not_alloc, no_of_drivers = no_of_drivers, alloc_drivers = alloc_drivers, pending_services=pending_services)
     else:
         return redirect('/login')
 
