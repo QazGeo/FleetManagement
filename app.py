@@ -1262,4 +1262,18 @@ def stringtolist(string):
 #     owner_id = cursor.fetchone()
 #     return owner_id
 
+@app.route('/areagen')
+def areagen():
+    sql = "select * from vehicles"
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    yom = []
+    status = []
+    rows = cursor.fetchall()
+    for row in rows:
+        yom.append(row[9])
+        status.append(row[14])
+
+    return jsonify({'yom': yom, 'status': status})
+
 app.run(debug = True)
